@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>流体シミュレーション</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="controller">
+        <h1>流体シミュレーション</h1>
+        <label>
+          幅
+          <input id="widthInput" type="number" value="200" />
+        </label>
+        <label>
+          高さ
+          <input id="heightInput" type="number" value="40" />
+        </label>
+        <label>
+          障害物のx座標
+          <input id="wallXInput" type="number" value="20" />
+        </label>
+        <label>
+          障害物のy座標
+          <input id="wallYInput" type="number" value="20" />
+        </label>
+          障害物の直径
+          <input id="wallDiameterInput" type="number" value="20" />
+        </label>
+        <label>
+          観測点のx座標
+          <input id="probeXInput" type="number" value="150" />
+        </label>
+        <label>
+          観測点のy座標
+          <input id="probeYInput" type="number" value="20" />
+        </label>
+        <label>
+          障害物の形
+          <select id="wallShape">
+            <option value="circle">丸</option>
+            <option value="bar">棒</option>
+            <option value="square">四角</option>
+          </select>
+        </label>
+        <label>
+          色のつけかた
+          <select id="drawMethod">
+            <option value="curl">回転（rot）</option>
+            <option value="velocity">速度場</option>
+            <option value="density">密度</option>
+          </select>
+        </label>
+        <label>
+          粘度
+	  <br>
+	  小さくしすぎに注意！
+          <input id="viscosityInput" type="number" value="0.01" step="0.001" />
+        </label>
+        <label>
+          左から流入する流体のx速度
+	  <br>
+	  大きくしすぎに注意！
+          <input id="speedInput" type="number" value="0.1" step="0.01" />
+        </label>
+        <div>
+          <button onclick="onResetButtonClick();">
+	    リセット
+	  </button>
+          <button id="toggleButton" onclick="onToggleButtonClick();">
+	    再生
+	  </button>
+	</div>
+	<div>
+          <button id="exportButton" onclick="simulator.export();">
+	    ここまでの観測点での回転を出力
+	  </button>
+	  <a id="exportA" download="lbm.csv"></a>
+        </div>
+	<div>
+	  <p>レイノルズ数</p>
+	  <p id="reynoldsP"></p>
+	</div>
+      </div>
+      <div id="visualizer">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<!-- I began to write this file as a hobby project. -->
+<!-- I did not use any AI tools to write this file. -->

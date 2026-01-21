@@ -1,0 +1,61 @@
+body {
+  margin: 0px;
+
+  font-family: system-ui;
+}
+
+#container {
+  box-sizing: border-box;
+  display: flex;
+  gap: 16px;
+  height: 100vh;
+  padding: 16px;
+  width: 100vw;
+}
+
+#controller {
+  display: flex;
+  flex-basis: 256px;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  gap: 8px;
+  overflow-y: scroll;
+}
+
+#controller p {
+  margin: 0px;
+}
+
+#controller h1 {
+  margin: 0px;
+
+  font-size: 1.5em;
+}
+
+#controller input, #controller select {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#downloadA {
+  display: none;
+}
+
+#visualizer {
+  align-items: center;
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+#canvas {
+  image-rendering: crisp-edges;
+}
+
+/* I began to write this file as a hobby project. */
+/* I did not use any AI tools to write this file. */
