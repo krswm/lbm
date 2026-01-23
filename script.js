@@ -150,6 +150,8 @@ class Simulator {
 
     this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
     document.getElementById("reynoldsP").innerHTML = `${this.Re}`;
+
+    this.intensity = document.getElementById("intensityInput").valueAsNumber;
   }
 
   nextStep() {
@@ -305,19 +307,19 @@ class Simulator {
 	  this.context.fillStyle = "white";
         } else if (this.drawMethod === "curl") {
           if (this.curl[i] >= 0) {
-            const l = Math.min(this.curl[i] * 1000, 100);
+            const l = Math.min(this.curl[i] * 1000 * this.intensity, 100);
 	    this.context.fillStyle = `oklch(${l}% 100% 0deg)`;
           } else {
-            const l = Math.min(-this.curl[i] * 1000, 100);
+            const l = Math.min(-this.curl[i] * 1000 * this.intensity, 100);
 	    this.context.fillStyle = `oklch(${l}% 100% 180deg)`;
           }
         } else if (this.drawMethod === "velocity") {
           const absu = Math.sqrt(this.uu[i] ** 2);
           const theta = Math.atan2(this.uy[i], this.ux[i]);x
 
-          const l = absu * 200;
+	  const l = absu * 2500 * this.intensity;
           const h = theta * 180 / Math.PI + 270;
-          this.context.fillStyle = `oklch(${l}% 100% ${h}deg)`;
+          this.context.fillStyle = `oklch(${l + 25}% ${l}% ${h}deg)`;
         } else if (this.drawMethod === "density") {
           const c = Math.min(Math.max((this.rho[i] - 1) * 3000 + 128, 0), 255);
           this.context.fillStyle = `rgb(${c} ${c} ${c})`;
