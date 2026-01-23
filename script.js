@@ -8,6 +8,8 @@ class Simulator {
   constructor() {
     this.canvas = document.getElementById("canvas");
     this.context = this.canvas.getContext("2d");
+
+    this.stepP = document.getElementById("stepP");
   }
 
   initialize() {
@@ -56,8 +58,8 @@ class Simulator {
     const probeY = document.getElementById("probeYInput").valueAsNumber;
     this.probeI = probeX + probeY * this.width;
 
-    const viscosity = document.getElementById("viscosityInput").valueAsNumber;
-    this.omega = 1 / (0.5 + viscosity);
+    this.viscosity = document.getElementById("viscosityInput").valueAsNumber;
+    this.omega = 1 / (0.5 + this.viscosity);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -82,30 +84,31 @@ class Simulator {
 
     const wall_x = document.getElementById("wallXInput").valueAsNumber;
     const wall_y = document.getElementById("wallYInput").valueAsNumber;
-    const wallRadius = (
-      document.getElementById("wallDiameterInput").valueAsNumber / 2
+    this.wallDiameter = (
+      document.getElementById("wallDiameterInput").valueAsNumber
     );
+    const wallRadius = this.wallDiameter / 2;
 
-    const rho0 = 1;
-    const ux0 = document.getElementById("speedInput").valueAsNumber;
-    const uu0 = ux0 ** 2;
+    this.rho0 = 1;
+    this.ux0 = document.getElementById("speedInput").valueAsNumber;
+    const uu0 = this.ux0 ** 2;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const i = x + y * this.width;
-        this.rho[i] = rho0;
-        this.ux[i] = ux0;
+        this.rho[i] = this.rho0;
+        this.ux[i] = this.ux0;
 
-        this.zp[i] = eq(rho0 /  9,  0,  1, ux0, 0, uu0);
-        this.zm[i] = eq(rho0 /  9,  0, -1, ux0, 0, uu0);
-        this.pz[i] = eq(rho0 /  9,  1,  0, ux0, 0, uu0);
-        this.mz[i] = eq(rho0 /  9, -1,  0, ux0, 0, uu0);
-        this.pp[i] = eq(rho0 / 36,  1,  1, ux0, 0, uu0);
-        this.mm[i] = eq(rho0 / 36, -1, -1, ux0, 0, uu0);
-        this.pm[i] = eq(rho0 / 36,  1, -1, ux0, 0, uu0);
-        this.mp[i] = eq(rho0 / 36, -1,  1, ux0, 0, uu0);
+        this.zp[i] = eq(this.rho0 /  9,  0,  1, this.ux0, 0, uu0);
+        this.zm[i] = eq(this.rho0 /  9,  0, -1, this.ux0, 0, uu0);
+        this.pz[i] = eq(this.rho0 /  9,  1,  0, this.ux0, 0, uu0);
+        this.mz[i] = eq(this.rho0 /  9, -1,  0, this.ux0, 0, uu0);
+        this.pp[i] = eq(this.rho0 / 36,  1,  1, this.ux0, 0, uu0);
+        this.mm[i] = eq(this.rho0 / 36, -1, -1, this.ux0, 0, uu0);
+        this.pm[i] = eq(this.rho0 / 36,  1, -1, this.ux0, 0, uu0);
+        this.mp[i] = eq(this.rho0 / 36, -1,  1, this.ux0, 0, uu0);
 
         this.zz[i] = (
-          rho0
+          this.rho0
           - this.zp[i] - this.zm[i] - this.pz[i] - this.mz[i]
           - this.pp[i] - this.mm[i] - this.pm[i] - this.mp[i]
         );
@@ -137,22 +140,45 @@ class Simulator {
       }
     }
 
-    this.curlAtProbeHistory = [];
+    this.step = 0;
+    this.csv = "step,curl,ux,uy,u,rho\n";
+    this.maxStep = document.getElementById("maxStepInput").valueAsNumber;
+    this.isBeforeMaxStep = true;
+    this.exportButton = document.getElementById("exportButton");
+    this.exportButton.disabled = true;
+    this.exportButton.innerText = "観測中…";
 
-    document.getElementById("reynoldsP").innerHTML = (
-      `${rho0 * ux0 * (2 * wallRadius) / viscosity}`
-    );
+    this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
+    document.getElementById("reynoldsP").innerHTML = `${this.Re}`;
   }
 
-  step() {
+  nextStep() {
     for (let trial = 0; trial < 25; trial++) {
-      this.curlAtProbeHistory.push(this.curl[this.probeI]);
+      if (this.isBeforeMaxStep) {
+	if (this.step >= this.maxStep) {
+	  this.exportButton.disabled = false;
+	  this.exportButton.innerText = "観測結果をCSVでダウンロード";
+	  this.isBeforeMaxStep = false;
+	} else {
+	  this.csv += (
+	    `${this.step},`
+	    + `${this.curl[this.probeI]},`
+	    + `${this.ux[this.probeI]},`
+	    + `${this.uy[this.probeI]},`
+	    + `${Math.sqrt(this.uu[this.probeI])},`
+	    + `${this.rho[this.probeI]}\n`
+	  );
+	}
+      }
 
       simulator.stream();
       simulator.bounce();
       simulator.collide();
+
+      this.step += 25;
     }
     simulator.draw();
+    this.stepP.innerHTML = `${this.step}`;
   }
 
   stream() {
@@ -287,7 +313,7 @@ class Simulator {
           }
         } else if (this.drawMethod === "velocity") {
           const absu = Math.sqrt(this.uu[i] ** 2);
-          const theta = Math.atan2(this.uy[i], this.ux[i]);
+          const theta = Math.atan2(this.uy[i], this.ux[i]);x
 
           const l = absu * 200;
           const h = theta * 180 / Math.PI + 270;
@@ -303,17 +329,20 @@ class Simulator {
   }
 
   export() {
-    let csv = "t,curl\n";
-    let t = 0;
-    for (let row = 0; row < this.curlAtProbeHistory.length; row++) {
-      csv += `${t},${this.curlAtProbeHistory[row]}\n`;
-      t += 25;
-    }
-
     const exportA = document.getElementById("exportA");
-    const blob = new Blob([csv], {type: "text/csv"});
+    const blob = new Blob([this.csv], {type: "text/csv"});
     const url = window.URL.createObjectURL(blob);
     exportA.href = url;
+    exportA.download = (
+      "lbm_"
+      + `${this.wallShape}_`
+      + `μ=${this.viscosity}_`
+      + `U=${this.ux0}_`
+      + `ρ=${this.rho0}_`
+      + `L=${this.wallDiameter}_`
+      + `Re=${this.Re}`
+      + ".csv"
+    );
     exportA.click();
   }
 }
@@ -327,19 +356,29 @@ const toggleButton = document.getElementById("toggleButton");
 function onResetButtonClick() {
   simulator.initialize();
   clearInterval(interval);
-  interval = undefined;
-  toggleButton.innerText = "再生";
+  interval = setInterval(simulator.nextStep.bind(simulator), 50);
+  toggleButton.innerText = "停止";
 }
 
 function onToggleButtonClick() {
   if (interval === undefined) {
-    interval = setInterval(simulator.step.bind(simulator), 50);
+    interval = setInterval(simulator.nextStep.bind(simulator), 50);
     toggleButton.innerText = "停止";
   } else {
     clearInterval(interval);
     interval = undefined;
     toggleButton.innerText = "再生";
   }
+}
+
+interval = setInterval(simulator.nextStep.bind(simulator), 50);
+toggleButton.innerText = "停止";
+
+function onCanvasMouseMove(element, event) {
+  const rectangle = canvas.getBoundingClientRect();
+  const x = Math.floor((event.clientX - rectangle.left) / 4);
+  const y = Math.floor((event.clientY - rectangle.top) / 4);
+  document.getElementById("mouseP").innerText = `(${x}, ${y})`;
 }
 
 // I began to write this file as a hobby project.

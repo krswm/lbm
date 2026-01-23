@@ -26,7 +26,7 @@
           <input id="wallYInput" type="number" value="20" />
         </label>
           障害物の直径
-          <input id="wallDiameterInput" type="number" value="20" />
+          <input id="wallDiameterInput" type="number" value="10" />
         </label>
         <label>
           観測点のx座標
@@ -64,6 +64,10 @@
 	  大きくしすぎに注意！
           <input id="speedInput" type="number" value="0.1" step="0.01" />
         </label>
+        <label>
+          観測はこのステップ数まで
+          <input id="maxStepInput" type="number" value="100000" step="10000" />
+        </label>
         <div>
           <button onclick="onResetButtonClick();">
 	    リセット
@@ -73,18 +77,28 @@
 	  </button>
 	</div>
 	<div>
-          <button id="exportButton" onclick="simulator.export();">
-	    ここまでの観測点での回転を出力
+          <button id="exportButton" disabled onclick="simulator.export();">
 	  </button>
-	  <a id="exportA" download="lbm.csv"></a>
+	  <a id="exportA"></a>
         </div>
+	<div>
+	  <p>ステップ数</p>
+	  <p id="stepP"></p>
+	</div>
+	<div>
+	  <p>マウスの位置</p>
+	  <p id="mouseP">(0, 0)</p>
+	</div>
 	<div>
 	  <p>レイノルズ数</p>
 	  <p id="reynoldsP"></p>
 	</div>
       </div>
       <div id="visualizer">
-        <canvas id="canvas"></canvas>
+        <canvas
+	  id="canvas"
+	  onmousemove="onCanvasMouseMove(this, event);"
+	></canvas>
       </div>
     </div>
     <script src="script.js"></script>
