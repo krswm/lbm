@@ -76,7 +76,7 @@ class Simulator {
         this.rho.push(0);
         this.ux.push(0);
         this.uy.push(0);
-	this.curl.push(0);
+        this.curl.push(0);
 
         this.is_wall.push(false);
       }
@@ -121,19 +121,19 @@ class Simulator {
           }
         } else if (this.wallShape === "bar") {
           if (
-	    x === wall_x
-	    && y >= wall_y - wallRadius
-	    && y < wall_y + wallRadius
-	  ) {
+            x === wall_x
+            && y >= wall_y - wallRadius
+            && y < wall_y + wallRadius
+          ) {
             this.is_wall[x + y * this.width] = true;
           }
         } else if (this.wallShape === "square") {
           if (
-	    x >= wall_x - wallRadius
-	    && x < wall_x + wallRadius
-	    && y >= wall_y - wallRadius
-	    && y < wall_y + wallRadius
-	  ) {
+            x >= wall_x - wallRadius
+            && x < wall_x + wallRadius
+            && y >= wall_y - wallRadius
+            && y < wall_y + wallRadius
+          ) {
             this.is_wall[x + y * this.width] = true;
           }
         }
@@ -149,7 +149,7 @@ class Simulator {
     this.exportButton.innerText = "観測中…";
 
     this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
-    document.getElementById("reynoldsP").innerHTML = `${this.Re}`;
+    document.getElementById("reynoldsP").innerHTML = this.Re.toFixed(3);
 
     this.intensity = document.getElementById("intensityInput").valueAsNumber;
   }
@@ -157,20 +157,20 @@ class Simulator {
   nextStep() {
     for (let trial = 0; trial < 25; trial++) {
       if (this.isBeforeMaxStep) {
-	if (this.step >= this.maxStep) {
-	  this.exportButton.disabled = false;
-	  this.exportButton.innerText = "観測結果をCSVでダウンロード";
-	  this.isBeforeMaxStep = false;
-	} else {
-	  this.csv += (
-	    `${this.step},`
-	    + `${this.curl[this.probeI]},`
-	    + `${this.ux[this.probeI]},`
-	    + `${this.uy[this.probeI]},`
-	    + `${Math.sqrt(this.uu[this.probeI])},`
-	    + `${this.rho[this.probeI]}\n`
-	  );
-	}
+        if (this.step >= this.maxStep) {
+          this.exportButton.disabled = false;
+          this.exportButton.innerText = "観測結果をCSVでダウンロード";
+          this.isBeforeMaxStep = false;
+        } else {
+          this.csv += (
+            `${this.step},`
+            + `${this.curl[this.probeI]},`
+            + `${this.ux[this.probeI]},`
+            + `${this.uy[this.probeI]},`
+            + `${Math.sqrt(this.uu[this.probeI])},`
+            + `${this.rho[this.probeI]}\n`
+          );
+        }
       }
 
       simulator.stream();
@@ -262,17 +262,17 @@ class Simulator {
               this.mp[i] + this.zp[i] + this.pp[i]
             - this.mm[i] - this.zm[i] - this.pm[i]
           ) / this.rho[i];
-	  this.uu[i] = this.ux[i] ** 2 + this.uy[i] ** 2;
+          this.uu[i] = this.ux[i] ** 2 + this.uy[i] ** 2;
         }
 
         this.update(this.rho[i], this.ux[i], this.uy[i], this.uu[i], i);
 
-	this.curl[i] = (
-	    this.uy[(y    ) * this.width + (x + 1)]
-	  - this.ux[(y + 1) * this.width + (x    )]
-	  - this.uy[(y    ) * this.width + (x - 1)]
-	  + this.ux[(y - 1) * this.width + (x    )]
-	);
+        this.curl[i] = (
+            this.uy[(y    ) * this.width + (x + 1)]
+          - this.ux[(y + 1) * this.width + (x    )]
+          - this.uy[(y    ) * this.width + (x - 1)]
+          + this.ux[(y - 1) * this.width + (x    )]
+        );
       }
     }
   }
@@ -303,21 +303,21 @@ class Simulator {
           this.context.fillStyle = "lime";
         } else if (this.is_wall[i]) {
           this.context.fillStyle = "gray";
-	} else if (i === this.probeI) {
-	  this.context.fillStyle = "white";
+        } else if (i === this.probeI) {
+          this.context.fillStyle = "white";
         } else if (this.drawMethod === "curl") {
           if (this.curl[i] >= 0) {
             const l = Math.min(this.curl[i] * 1000 * this.intensity, 100);
-	    this.context.fillStyle = `oklch(${l}% 100% 0deg)`;
+            this.context.fillStyle = `oklch(${l}% 100% 0deg)`;
           } else {
             const l = Math.min(-this.curl[i] * 1000 * this.intensity, 100);
-	    this.context.fillStyle = `oklch(${l}% 100% 180deg)`;
+            this.context.fillStyle = `oklch(${l}% 100% 180deg)`;
           }
         } else if (this.drawMethod === "velocity") {
           const absu = Math.sqrt(this.uu[i] ** 2);
           const theta = Math.atan2(this.uy[i], this.ux[i]);x
 
-	  const l = absu * 2500 * this.intensity;
+          const l = absu * 2500 * this.intensity;
           const h = theta * 180 / Math.PI + 270;
           this.context.fillStyle = `oklch(${l + 25}% ${l}% ${h}deg)`;
         } else if (this.drawMethod === "density") {

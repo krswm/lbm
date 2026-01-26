@@ -4,6 +4,10 @@ body {
   font-family: system-ui;
 }
 
+hr {
+  border: none;
+}
+
 #container {
   box-sizing: border-box;
   display: flex;
@@ -33,6 +37,12 @@ body {
   font-size: 1.5em;
 }
 
+#controller h2 {
+  margin: 0px;
+
+  font-size: 1em;
+}
+
 #controller input, #controller select {
   box-sizing: border-box;
   width: 100%;
@@ -55,6 +65,10 @@ body {
 
 #canvas {
   image-rendering: crisp-edges;
+}
+
+.math {
+  font-style: italic;
 }
 
 /* I began to write this file as a hobby project. */
