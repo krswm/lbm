@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>流体シミュレーション</title>
@@ -8,91 +8,96 @@
   <body>
     <div id="container">
       <div id="controller">
-        <h1>流体シミュレーション</h1>
-        <a href="https://github.com/krswm/lbm/">ソースコード</a>
-        <a href="en.html">English</a>
+        <h1>Fluid Simulation</h1>
+        <a href="https://github.com/krswm/lbm">Source</a>
+        <a href="index.html">日本語</a>
         <br>
         <div>
-          <p>ステップ数</p>
+          <p>Steps</p>
           <p id="stepP">0</p>
         </div>
         <div>
-          <p>マウスの位置</p>
+          <p>Mouse position</p>
           <p id="mouseP">(0, 0)</p>
         </div>
         <div>
           <p>
-            レイノルズ数
+            Reynolds number
             Re = <span class="math">UL</span>/<span class="math">ν</span>
           </p>
           <p id="reynoldsP"></p>
         </div>
         <div>
           <button onclick="onResetButtonClick();">
-	    リセット
+            Reset
           </button>
           <button id="toggleButton" onclick="onToggleButtonClick();">
-            開始
+            Play
           </button>
         </div>
         <hr>
-        <h2>大きさ</h2>
+        <h2>Size</h2>
         <label>
-          幅
+          Width
           <input id="widthInput" type="number" value="200" />
         </label>
         <label>
-          高さ
+          Height
           <input id="heightInput" type="number" value="40" />
         </label>
         <hr>
-        <h2>境界条件</h2>
+        <h2>Boundary Condition</h2>
         <label>
-          粘度 <span class="math">ν</span>
+          Viscosity <span class="math">ν</span>
           <br>
-          小さくしすぎに注意！
+          Please do not make it too small!
           <input id="viscosityInput" type="number" value="0.005" step="0.001" />
         </label>
         <label>
-          左から流入する流体の速さ <span class="math">U</span>
+          Speed of fluid flowing from the left side
+          <span class="math">U</span>
           <br>
-          大きくしすぎに注意！
+          Please do not make it too large!
           <input id="speedInput" type="number" value="0.1" step="0.01" />
         </label>
+        <div>
+          <p>Density <span class="math">ρ</span></p>
+          <p>1</p>
+        </div>
         <hr>
-        <h2>障害物</h2>
+        <h2>Barrier</h2>
         <label>
-          形
+          Shape
           <select id="wallShape">
-            <option value="circle">丸</option>
-            <option value="bar">棒</option>
-            <option value="square">四角</option>
+            <option value="circle">Circle</option>
+            <option value="bar">Bar</option>
+            <option value="square">Square</option>
           </select>
         </label>
         <label>
-          x座標
+          x position
           <input id="wallXInput" type="number" value="20" />
         </label>
         <label>
-          y座標
+          y position
           <input id="wallYInput" type="number" value="20" />
         </label>
         <label>
-          代表長さ（一辺／直径） <span class="math">L</span>
+          Length <span class="math">L</span>
           <input id="wallDiameterInput" type="number" value="10" />
         </label>
         <hr>
-        <h2>観測点</h2>
+        <h2>Observation</h2>
         <label>
-          x座標
+          x position
           <input id="probeXInput" type="number" value="150" />
         </label>
         <label>
-          y座標
+          y position
           <input id="probeYInput" type="number" value="20" />
         </label>
         <label>
-          このステップ数まで観測
+          Observe until this steps
           <input id="maxStepInput" type="number" value="100000" step="10000" />
         </label>
         <div>
@@ -101,17 +106,17 @@
           <a id="exportA"></a>
         </div>
         <hr>
-        <h2>視覚化</h2>
+        <h2>Visualization</h2>
         <label>
-          色のつけかた
+          Coloring
           <select id="drawMethod">
-            <option value="curl">回転（rot）</option>
-            <option value="velocity">速度場</option>
-            <option value="density">密度</option>
+            <option value="curl">Curl</option>
+            <option value="velocity">Velocity</option>
+            <option value="density">Density</option>
           </select>
         </label>
         <label>
-          色の濃さ
+          Intensity
           <input id="intensityInput" type="number" value="1" />
         </label>
         <img src="legend.svg" alt="Legend"></img>

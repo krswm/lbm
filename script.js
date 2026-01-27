@@ -1,3 +1,5 @@
+const isEnglish = window.location.pathname.split("/").pop() === "en.html";
+
 // Occupation number at the equilibrium
 function eq(W, ex, ey, ux, uy, uu) {
   const eu = (ex * ux + ey * uy);
@@ -59,7 +61,7 @@ class Simulator {
     this.probeI = probeX + probeY * this.width;
 
     this.viscosity = document.getElementById("viscosityInput").valueAsNumber;
-    this.omega = 1 / (0.5 + this.viscosity);
+    this.omega = 1 / (0.5 + 3.0 * this.viscosity);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -146,7 +148,7 @@ class Simulator {
     this.isBeforeMaxStep = true;
     this.exportButton = document.getElementById("exportButton");
     this.exportButton.disabled = true;
-    this.exportButton.innerText = "観測中…";
+    this.exportButton.innerText = isEnglish ? "Observing…" : "観測中…";
 
     this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
     document.getElementById("reynoldsP").innerHTML = this.Re.toFixed(3);
@@ -159,7 +161,11 @@ class Simulator {
       if (this.isBeforeMaxStep) {
         if (this.step >= this.maxStep) {
           this.exportButton.disabled = false;
-          this.exportButton.innerText = "観測結果をCSVでダウンロード";
+          this.exportButton.innerText = (
+            isEnglish
+            ? "Download the result as CSV"
+            : "観測結果をCSVでダウンロード"
+          );
           this.isBeforeMaxStep = false;
         } else {
           this.csv += (
@@ -355,26 +361,29 @@ let interval = undefined;
 
 const toggleButton = document.getElementById("toggleButton");
 
+const pauseText = isEnglish ? "Pause" : "停止";
+const playText = isEnglish ? "Play" : "再生";
+
 function onResetButtonClick() {
   simulator.initialize();
   clearInterval(interval);
   interval = setInterval(simulator.nextStep.bind(simulator), 50);
-  toggleButton.innerText = "停止";
+  toggleButton.innerText = pauseText;
 }
 
 function onToggleButtonClick() {
   if (interval === undefined) {
     interval = setInterval(simulator.nextStep.bind(simulator), 50);
-    toggleButton.innerText = "停止";
+    toggleButton.innerText = pauseText;
   } else {
     clearInterval(interval);
     interval = undefined;
-    toggleButton.innerText = "再生";
+    toggleButton.innerText = playText;
   }
 }
 
 interval = setInterval(simulator.nextStep.bind(simulator), 50);
-toggleButton.innerText = "停止";
+toggleButton.innerText = pauseText;
 
 function onCanvasMouseMove(element, event) {
   const rectangle = canvas.getBoundingClientRect();
