@@ -31,32 +31,60 @@ body {
   overflow: scroll;
 }
 
+#control {
+  place-self: start center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+
+  background-color: oklch(95% 0% 0deg);
+  overflow: hidden auto;
+}
+.box {
+  align-self: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  box-sizing: border-box;
+  width: 22rem; /* 24rem - 1rem - 1rem */
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  background-color: white;
+}
+
+header {
+  align-self: center;
+
+  box-sizing: border-box;
+  width: 22rem; /* 24rem - 1rem - 1rem */
+}
+header > h1 {
+  margin: 0rem;
+}
+header > div {
+  padding-top: 0.5rem;
+}
+header > div > a {
+  color: oklch(50% 0% 0deg);
+}
+header > div > a:hover {
+  color: black;
+}
+
 #canvas {
   place-self: center;
 }
 
 hr {
   border: none;
-}
-
-#control {
-  display: flex;
-  flex-basis: 256px;
-  flex-direction: column;
-  flex-grow: 0;
-  flex-shrink: 0;
-  gap: 8px;
-  overflow-y: scroll;
-}
-
-#control p {
-  margin: 0px;
-}
-
-#control h1 {
-  margin: 0px;
-
-  font-size: 1.5em;
 }
 
 #control h2 {
