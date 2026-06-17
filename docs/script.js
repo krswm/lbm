@@ -1,3 +1,5 @@
+const $id = (id) => document.getElementById(id);
+
 const isEnglish = window.location.pathname.split("/").pop() === "en.html";
 
 // Occupation number at the equilibrium
@@ -8,10 +10,44 @@ function eq(W, ex, ey, ux, uy, uu) {
 
 class Simulator {
   constructor() {
+    this.setUpControl();
+
     this.canvas = document.getElementById("canvas");
     this.context = this.canvas.getContext("2d");
 
     this.stepP = document.getElementById("stepP");
+  }
+
+  setUpControl() {
+    for (const [id, min, max, step, value] of [
+      ["nu", 0, 0.01, 0.001, 0.005],
+    ]) {
+      const number = document.querySelector(`#${id} > input[type="number"]`);
+      number.min = min;
+      number.step = step;
+      number.value = value;
+
+      const range = $id(id).querySelector(`#${id} > input[type="range"]`);
+      range.min = min;
+      range.max = max;
+      range.step = step;
+      range.value = value;
+
+      number.addEventListener("input", () => {
+        const value = number.valueAsNumber;
+        if (!Number.isFinite(value)) {
+          return;
+        }
+        range.value = value;
+      });
+      range.addEventListener("input", () => {
+        const value = range.valueAsNumber;
+        if (!Number.isFinite(value)) {
+          return;
+        }
+        number.value = value;
+      });
+    }
   }
 
   initialize() {

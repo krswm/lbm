@@ -64,18 +64,51 @@ body {
   align-items: center;
 
   display: grid;
-  grid:
-    "t . n" 2.5rem /
-    auto 1fr 6rem; /* TODO: 6rem */
+  grid: 2.5rem / auto 1fr auto;
   gap: 0.5rem;
 }
 .number-input > div {
+  line-height: 2.5rem;
+}
+.number-input > input {
+  grid-column: 3;
+}
+
+.slider {
+  display: grid;
+  grid:
+    "i t . m n" 2.5rem
+    "r r r r r" auto /
+    auto auto 1fr auto auto;
+}
+.slider > div {
+  align-self: center;
+}
+.slider > canvas,
+.slider > img {
+  grid-area: i; /* image */
+  align-self: center;
+
+  margin-right: 0.5rem;
+}
+.slider > div:nth-of-type(1) {
   grid-area: t; /* text */
 
   line-height: 2.5rem;
 }
-.number-input > input {
+.slider > div:nth-of-type(2) {
+  grid-area: m; /* math */
+
+  line-height: 2.5rem;
+  margin-right: 0.5rem;
+}
+.slider > input[type="number"] {
   grid-area: n; /* number */
+}
+.slider > input[type="range"] {
+  grid-area: r; /* range */
+
+  margin-top: 0.5rem;
 }
 
 #N {
@@ -130,6 +163,60 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
+input[type="range"] {
+  height: 1rem;
+  width: 100%;
+  margin: 0rem;
+
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 1rem;
+  width: 1rem;
+  margin: -0.25rem 0px;
+  border-radius: 0.5rem;
+
+  -webkit-appearance: none;
+  background-color: oklch(50% 0% 0deg);
+  box-shadow: none;
+}
+input[type="range"]::-moz-range-thumb {
+  height: 1rem;
+  width: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+
+  background-color: oklch(50% 0% 0deg);
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+
+  background-color: oklch(90% 0% 0deg);
+}
+input[type="range"]::-moz-range-track {
+  height: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+
+  background-color: oklch(90% 0% 0deg);
+}
+input[type="range"]::-webkit-slider-runnable-track:hover {
+  background-color: oklch(80% 0% 0deg);
+}
+input[type="range"]::-moz-range-track:hover {
+  background-color: oklch(80% 0% 0deg);
+}
+input[type="range"]::-webkit-slider-runnable-track:active {
+  background-color: oklch(90% 0% 0deg);
+}
+input[type="range"]::-moz-range-track:active {
+  background-color: oklch(90% 0% 0deg);
+}
+
 header {
   align-self: center;
 
@@ -161,11 +248,6 @@ hr {
   margin: 0px;
 
   font-size: 1em;
-}
-
-#control input, #control select {
-  box-sizing: border-box;
-  width: 100%;
 }
 
 #downloadA {
