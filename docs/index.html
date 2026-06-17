@@ -2,39 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>流体シミュレーション</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Fluid Simulation" />
+    <title>Fluid Simulation</title>
     <link rel="stylesheet" href="style.css" />
+
+    <!-- KaTeX (https://katex.org/docs/browser) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.css"
+      integrity="sha384-UA8juhPf75SzzAMA/4fo3yOU7sBJ0om7SCD2GHq0fZqZco6tr1UCV7nUbk9J90JM"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.js"
+      integrity="sha384-Tt7wBxLKwSzFVRET4O4U9H6v8MNaQ/CjN2FMP4xFm0ErrFu6aNqoonRVW5W40iGI"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/contrib/auto-render.min.js"
+      integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz"
+      crossorigin="anonymous"
+      onload="renderMathInElement(document.body)"
+    ></script>
   </head>
   <body>
-    <div id="container">
-      <div id="controller">
+    <div id="output">
+      <canvas id="canvas" onmousemove="onCanvasMouseMove(this, event);"></canvas>
+    </div>
+    <div id="control">
+      <header>
         <h1>Fluid Simulation</h1>
-        <a href="https://github.com/krswm/lbm">Source</a>
-        <br>
         <div>
-          <p>Steps</p>
-          <p id="stepP">0</p>
+          <a href="https://github.com/krswm/lbm">Repository on GitHub</a>
         </div>
-        <div>
-          <p>Mouse position</p>
-          <p id="mouseP">(0, 0)</p>
-        </div>
-        <div>
-          <p>
-            Reynolds number
-            Re = <span class="math">UL</span>/<span class="math">ν</span>
-          </p>
-          <p id="reynoldsP"></p>
-        </div>
-        <div>
-          <button onclick="onResetButtonClick();">
-            Restart
-          </button>
-          <button id="toggleButton" onclick="onToggleButtonClick();">
-            Play
-          </button>
-	</div>
-        <hr>
+      </header>
+
+      <div class="box">
+        <button onclick="onResetButtonClick();">Restart</button>
+        <button id="toggleButton" onclick="onToggleButtonClick();">Play</button>
+      </div>
+
+      <div class="box">
         <h2>Size</h2>
         <label>
           Width
@@ -44,7 +55,9 @@
           Height
           <input id="heightInput" type="number" value="40" />
         </label>
-        <hr>
+      </div>
+
+      <div class="box">
         <h2>Boundary Condition</h2>
         <label>
           Viscosity <span class="math">ν</span>
@@ -63,7 +76,9 @@
           <p>Density <span class="math">ρ</span></p>
           <p>1</p>
         </div>
-        <hr>
+      </div>
+
+      <div class="box">
         <h2>Barrier</h2>
         <label>
           Shape
@@ -85,7 +100,9 @@
           Length <span class="math">L</span>
           <input id="wallDiameterInput" type="number" value="10" />
         </label>
-        <hr>
+      </div>
+
+      <div class="box">
         <h2>Observation</h2>
         <label>
           x position
@@ -104,7 +121,9 @@
           </button>
           <a id="exportA"></a>
         </div>
-        <hr>
+      </div>
+
+      <div class="box">
         <h2>Visualization</h2>
         <label>
           Coloring
@@ -120,13 +139,26 @@
         </label>
         <img src="legend.svg" alt="Legend"></img>
       </div>
-      <div id="visualizer">
-        <canvas
-          id="canvas"
-          onmousemove="onCanvasMouseMove(this, event);"
-        ></canvas>
+
+      <div class="box">
+        <div>
+          <p>Steps</p>
+          <p id="stepP">0</p>
+        </div>
+        <div>
+          <p>Mouse position</p>
+          <p id="mouseP">(0, 0)</p>
+        </div>
+        <div>
+          <p>
+            Reynolds number
+            Re = <span class="math">UL</span>/<span class="math">ν</span>
+          </p>
+          <p id="reynoldsP"></p>
+        </div>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>

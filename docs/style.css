@@ -1,23 +1,45 @@
 body {
-  margin: 0px;
+  display: grid;
+
+  margin: 0rem;
 
   font-family: system-ui;
+}
+/* 32rem + 24rem = 56rem */
+@media (width >= 56rem) {
+  body {
+    grid: 100vh / 1fr 24rem;
+  }
+
+  #control {
+    height: 100vh;
+  }
+}
+@media (width < 56rem) {
+  body {
+    grid: 100vh auto / 100vw;
+  }
+}
+
+#output {
+  display: grid;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+
+  overflow: scroll;
+}
+
+#canvas {
+  place-self: center;
 }
 
 hr {
   border: none;
 }
 
-#container {
-  box-sizing: border-box;
-  display: flex;
-  gap: 16px;
-  height: 100vh;
-  padding: 16px;
-  width: 100vw;
-}
-
-#controller {
+#control {
   display: flex;
   flex-basis: 256px;
   flex-direction: column;
@@ -27,40 +49,29 @@ hr {
   overflow-y: scroll;
 }
 
-#controller p {
+#control p {
   margin: 0px;
 }
 
-#controller h1 {
+#control h1 {
   margin: 0px;
 
   font-size: 1.5em;
 }
 
-#controller h2 {
+#control h2 {
   margin: 0px;
 
   font-size: 1em;
 }
 
-#controller input, #controller select {
+#control input, #control select {
   box-sizing: border-box;
   width: 100%;
 }
 
 #downloadA {
   display: none;
-}
-
-#visualizer {
-  align-items: center;
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  flex-shrink: 1;
-  height: 100%;
-  overflow-x: scroll;
-  overflow-y: scroll;
 }
 
 #canvas {
