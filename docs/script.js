@@ -1,7 +1,5 @@
 const $id = (id) => document.getElementById(id);
 
-const isEnglish = window.location.pathname.split("/").pop() === "en.html";
-
 // Occupation number at the equilibrium
 function eq(W, ex, ey, ux, uy, uu) {
   const eu = (ex * ux + ey * uy);
@@ -186,7 +184,7 @@ class Simulator {
     this.isBeforeMaxStep = true;
     this.exportButton = document.getElementById("exportButton");
     this.exportButton.disabled = true;
-    this.exportButton.innerText = isEnglish ? "Observing…" : "観測中…";
+    this.exportButton.innerText = "Observing…";
 
     /*
     this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
@@ -201,11 +199,7 @@ class Simulator {
       if (this.isBeforeMaxStep) {
         if (this.step >= this.maxStep) {
           this.exportButton.disabled = false;
-          this.exportButton.innerText = (
-            isEnglish
-            ? "Download the result as CSV"
-            : "観測結果をCSVでダウンロード"
-          );
+          this.exportButton.innerText = "Download the result as CSV";
           this.isBeforeMaxStep = false;
         } else {
           this.csv += (
@@ -400,29 +394,26 @@ let interval = undefined;
 
 const toggleButton = document.getElementById("toggleButton");
 
-const pauseText = isEnglish ? "Pause" : "停止";
-const playText = isEnglish ? "Play" : "再生";
-
 function onResetButtonClick() {
   simulator.initialize();
   clearInterval(interval);
   interval = setInterval(simulator.nextStep.bind(simulator), 50);
-  toggleButton.innerText = pauseText;
+  toggleButton.innerText = "Pause";
 }
 
 function onToggleButtonClick() {
   if (interval === undefined) {
     interval = setInterval(simulator.nextStep.bind(simulator), 50);
-    toggleButton.innerText = pauseText;
+    toggleButton.innerText = "Pause";
   } else {
     clearInterval(interval);
     interval = undefined;
-    toggleButton.innerText = playText;
+    toggleButton.innerText = "Play";
   }
 }
 
 interval = setInterval(simulator.nextStep.bind(simulator), 50);
-toggleButton.innerText = pauseText;
+toggleButton.innerText = "Pause";
 
 // I began to write this file as a hobby project.
 // I did not use any AI tools to write this file.
