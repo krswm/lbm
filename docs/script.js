@@ -87,8 +87,8 @@ class Simulator {
 
     this.height = document.getElementById("heightInput").valueAsNumber;
     this.width = document.getElementById("widthInput").valueAsNumber;
-    this.wallShape = document.getElementById("wallShape").value;
-    this.drawMethod = document.getElementById("drawMethod").value;
+    this.wallShape = document.querySelector('input[type="radio"][name="wallShape"]:checked').value;
+    this.drawMethod = document.querySelector('input[type="radio"][name="drawMethod"]:checked').value;
     this.canvas.height = this.height;
     this.canvas.width = this.width;
     this.canvas.style.height = `${this.height * 4}px`;

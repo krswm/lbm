@@ -74,6 +74,12 @@ body {
   grid-column: 3;
 }
 
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .slider {
   display: grid;
   grid:
@@ -135,6 +141,26 @@ body {
 }
 #N > :nth-child(5) {
   grid-column: 6;
+}
+
+.radio {
+  display: grid;
+  grid:
+    "r t" 1rem /
+    1rem 1fr;
+  gap: 0.5rem;
+
+  cursor: pointer;
+}
+.radio > input {
+  grid-area: r; /* radio */
+
+  place-self: center;
+}
+.radio > div {
+  grid-area: t; /* text */
+
+  align-self: center;
 }
 
 input[type="number"] {
@@ -215,6 +241,25 @@ input[type="range"]::-webkit-slider-runnable-track:active {
 }
 input[type="range"]::-moz-range-track:active {
   background-color: oklch(90% 0% 0deg);
+}
+
+input[type="radio"] {
+  height: 1rem;
+  width: 1rem;
+
+  border: 2px solid oklch(90% 0% 0deg);
+  border-radius: 0.5rem;
+
+  appearance: none;
+  cursor: pointer;
+}
+input[type="radio"]:hover {
+  border: 2px solid oklch(80% 0% 0deg);
+}
+input[type="radio"]:checked {
+  border: 2px solid oklch(50% 0% 0deg);
+
+  background-color: oklch(50% 0% 0deg);
 }
 
 button {

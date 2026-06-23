@@ -81,14 +81,21 @@
 
       <div class="box">
         <h2>Barrier</h2>
-        <label>
-          Shape
-          <select id="wallShape">
-            <option value="circle">Circle</option>
-            <option value="bar">Bar</option>
-            <option value="square">Square</option>
-          </select>
-        </label>
+
+        <div class="radio-container">
+          <label class="radio">
+            <input type="radio" name="wallShape" value="circle" checked />
+            <div>Circle</div>
+          </label>
+          <label class="radio">
+            <input type="radio" name="wallShape" value="bar" />
+            <div>Bar</div>
+          </label>
+          <label class="radio">
+            <input type="radio" name="wallShape" value="square" />
+            <div>Square</div>
+          </label>
+        </div>
 
         <div class="number-input">
           <div>\(x\) position</div>
@@ -133,14 +140,21 @@
 
       <div class="box">
         <h2>Visualization</h2>
-        <label>
-          Coloring
-          <select id="drawMethod">
-            <option value="curl">Curl</option>
-            <option value="velocity">Velocity</option>
-            <option value="density">Density</option>
-          </select>
-        </label>
+
+        <div class="radio-container">
+          <label class="radio">
+            <input type="radio" name="drawMethod" value="curl" checked />
+            <div>Curl</div>
+          </label>
+          <label class="radio">
+            <input type="radio" name="drawMethod" value="velocity" />
+            <div>Velocity</div>
+          </label>
+          <label class="radio">
+            <input type="radio" name="drawMethod" value="density" />
+            <div>Density</div>
+          </label>
+        </div>
 
         <div class="slider" id="intensity">
           <div>Intensity</div>
