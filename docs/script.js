@@ -188,8 +188,10 @@ class Simulator {
     this.exportButton.disabled = true;
     this.exportButton.innerText = isEnglish ? "Observing…" : "観測中…";
 
+    /*
     this.Re = this.rho0 * this.ux0 * (2 * wallRadius) / this.viscosity
     document.getElementById("reynoldsP").innerHTML = this.Re.toFixed(3);
+    */
 
     this.intensity = document.getElementById("intensityInput").valueAsNumber;
   }
@@ -224,7 +226,6 @@ class Simulator {
       this.step += 25;
     }
     simulator.draw();
-    this.stepP.innerHTML = `${this.step}`;
   }
 
   stream() {
@@ -422,13 +423,6 @@ function onToggleButtonClick() {
 
 interval = setInterval(simulator.nextStep.bind(simulator), 50);
 toggleButton.innerText = pauseText;
-
-function onCanvasMouseMove(element, event) {
-  const rectangle = canvas.getBoundingClientRect();
-  const x = Math.floor((event.clientX - rectangle.left) / 4);
-  const y = Math.floor((event.clientY - rectangle.top) / 4);
-  document.getElementById("mouseP").innerText = `(${x}, ${y})`;
-}
 
 // I began to write this file as a hobby project.
 // I did not use any AI tools to write this file.

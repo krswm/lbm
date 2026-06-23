@@ -310,10 +310,7 @@ header > div > a:hover {
 
 #canvas {
   place-self: center;
-}
-
-hr {
-  border: none;
+  image-rendering: crisp-edges;
 }
 
 #control h2 {
@@ -324,14 +321,6 @@ hr {
 
 #downloadA {
   display: none;
-}
-
-#canvas {
-  image-rendering: crisp-edges;
-}
-
-.math {
-  font-style: italic;
 }
 
 /* I began to write this file as a hobby project. */

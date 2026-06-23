@@ -30,7 +30,7 @@
   </head>
   <body>
     <div id="output">
-      <canvas id="canvas" onmousemove="onCanvasMouseMove(this, event);"></canvas>
+      <canvas id="canvas"></canvas>
     </div>
     <div id="control">
       <header>
@@ -73,10 +73,7 @@
           <input type="range" />
         </div>
 
-        <div>
-          <p>Density <span class="math">ρ</span></p>
-          <p>1</p>
-        </div>
+        <!-- Density rho = 1 -->
       </div>
 
       <div class="box">
@@ -108,7 +105,7 @@
         </div>
 
         <div class="number-input">
-          <div>Length</div>
+          <div>Length \(L\)</div>
           <input id="wallDiameterInput" type="number" value="10" />
         </div>
       </div>
@@ -162,18 +159,13 @@
           <input type="range" />
         </div>
 
+        <!--
         <img src="legend.svg" alt="Legend"></img>
+        -->
       </div>
 
+      <!--
       <div class="box">
-        <div>
-          <p>Steps</p>
-          <p id="stepP">0</p>
-        </div>
-        <div>
-          <p>Mouse position</p>
-          <p id="mouseP">(0, 0)</p>
-        </div>
         <div>
           <p>
             Reynolds number
@@ -182,6 +174,7 @@
           <p id="reynoldsP"></p>
         </div>
       </div>
+      --->
     </div>
 
     <script src="script.js"></script>
