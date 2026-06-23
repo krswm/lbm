@@ -217,6 +217,31 @@ input[type="range"]::-moz-range-track:active {
   background-color: oklch(90% 0% 0deg);
 }
 
+button {
+  box-sizing: border-box;
+  height: 2.5rem;
+  width: 100%;
+  border: 1px solid oklch(80% 0% 0deg);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  font-family: system-ui;
+  font-size: 1rem;
+}
+button:disabled {
+  cursor: auto;
+  opacity: 50%;
+}
+button:not(:disabled):hover {
+  background-color: oklch(95% 0% 0deg);
+}
+button:not(:disabled):active {
+  background-color: oklch(90% 0% 0deg);
+}
+
 header {
   align-self: center;
 
@@ -235,6 +260,8 @@ header > div > a {
 header > div > a:hover {
   color: black;
 }
+
+/* */
 
 #canvas {
   place-self: center;

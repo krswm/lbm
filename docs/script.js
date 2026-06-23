@@ -20,7 +20,9 @@ class Simulator {
 
   setUpControl() {
     for (const [id, min, max, step, value] of [
-      ["nu", 0, 0.01, 0.001, 0.005],
+      ["nu", 0, 0.01, 0.0001, 0.005],
+      ["U", 0, 0.1, 0.001, 0.1],
+      ["intensity", 0, 10, 0.1, 1],
     ]) {
       const number = document.querySelector(`#${id} > input[type="number"]`);
       number.min = min;

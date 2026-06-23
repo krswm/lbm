@@ -65,13 +65,14 @@
           <input type="range" />
         </div>
 
-        <label>
-          Speed of fluid flowing from the left side
-          <span class="math">U</span>
-          <br>
-          Please do not make it too large!
-          <input id="speedInput" type="number" value="0.1" step="0.01" />
-        </label>
+        <div class="slider" id="U">
+          <!-- Speed of fluid flowing from the left side -->
+          <div>Speed of fluid</div>
+          <div>\(U =\)</div>
+          <input id="speedInput" type="number" />
+          <input type="range" />
+        </div>
+
         <div>
           <p>Density <span class="math">ρ</span></p>
           <p>1</p>
@@ -140,10 +141,13 @@
             <option value="density">Density</option>
           </select>
         </label>
-        <label>
-          Intensity
-          <input id="intensityInput" type="number" value="1" />
-        </label>
+
+        <div class="slider" id="intensity">
+          <div>Intensity</div>
+          <input id="intensityInput" type="number" />
+          <input type="range" />
+        </div>
+
         <img src="legend.svg" alt="Legend"></img>
       </div>
 
